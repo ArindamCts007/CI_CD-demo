@@ -11,6 +11,6 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 	</http:listener-config>
 	<flow name="ci_cd-demoFlow" doc:id="9f50777a-5798-4076-a00f-933a8edc31a5" >
 		<http:listener doc:name="Listener" doc:id="53c05756-17d2-4075-b8b4-864c889444ae" config-ref="HTTP_Listener_config" path="/CICDPIPELINE"/>
-		<set-payload value="#['THIS IS MY 1ST CI CD PROJECT ']" doc:name="Set Payload" doc:id="da783f99-65a2-4e05-b52f-a35d6e0834c3" />
+		<set-payload value="#['THIS IS MY 1ST CI CD PROJECT   ']" doc:name="Set Payload" doc:id="da783f99-65a2-4e05-b52f-a35d6e0834c3" />
 	</flow>
 </mule>
