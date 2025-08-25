@@ -4,9 +4,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>4c1443f5-bb8b-4313-a009-dc4ac7028224</groupId>
+	<groupId>8456fb96-a7c8-45ca-ae67-d5873644aba8</groupId>
 	<artifactId>order-api-security-new</artifactId>
-	<version>1.0.2</version>
+	<version>1.0.4</version>
 	<packaging>mule-application</packaging>
 	<name>order-api-security</name>
 
@@ -15,7 +15,47 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<app.runtime>4.9.0</app.runtime>
 		<mule.maven.plugin.version>4.3.0</mule.maven.plugin.version>
+		<anypoint.organizantion>8456fb96-a7c8-45ca-ae67-d5873644aba8</anypoint.organizantion>
+		<anypoint.username>sanughatal</anypoint.username>
+		<anypoint.password>Hegepradhan777%</anypoint.password>
 	</properties>
+
+	<profiles>
+		<!-- Dev Profile -->
+		<profile>
+			<id>dev</id>
+			<properties>
+				<target>Cloudhub-US-East-2</target>
+				<replicas>1</replicas>
+				<region>us-east-1</region>
+				<env>dev</env>
+				<app.name>dev-order-api-security</app.name>
+				<vCores>0.1</vCores>
+				<worker.type>MICRO</worker.type>
+				<anypoint.client.id>b3deae279cd04ec9b71e073539fb8531</anypoint.client.id>
+				<anypoint.client.secret>eB67b0B12Ef44A7eA08A054cD4c67D4C</anypoint.client.secret>
+				<api.id>20477281</api.id>
+			</properties>
+		</profile>
+
+		<!-- Sandbox Profile -->
+		<profile>
+			<id>Sandbox</id>
+			<properties>
+				<target>Cloudhub-US-East-2</target>
+				<replicas>1</replicas>
+				<region>us-east-1</region>
+				<env>Sandbox</env>
+				<app.name>sand-order-api-security</app.name>
+				<vCores>0.1</vCores>
+				<worker.type>MICRO</worker.type>
+				<anypoint.client.id>854d84b311d841b29b67b47492c5cef4</anypoint.client.id>
+				<anypoint.client.secret>a32ecC832dBB4EE686c1F65435e234E1</anypoint.client.secret>
+				<api.id>20479212</api.id>
+			</properties>
+		</profile>
+
+	</profiles>
 
 	<build>
 		<plugins>
@@ -24,6 +64,7 @@
 				<artifactId>maven-clean-plugin</artifactId>
 				<version>3.2.0</version>
 			</plugin>
+
 			<plugin>
 				<groupId>org.mule.tools.maven</groupId>
 				<artifactId>mule-maven-plugin</artifactId>
@@ -33,6 +74,19 @@
 					<classifier>---- select project type ----</classifier>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.mule.tools.maven</groupId>
+				<artifactId>exchange-mule-maven-plugin</artifactId>
+				<version>0.0.23</version>
+				<configuration>
+					<username>${anypoint.username}</username>
+					<password>${anypoint.password}</password>
+					<organization>${anypoint.organization}</organization>
+					<exchangeUrl>https://maven.anypoint.mulesoft.com/api/v3/organizations/8456fb96-a7c8-45ca-ae67-d5873644aba8/maven</exchangeUrl>
+				</configuration>
+			</plugin>
+
 			<plugin>
 				<groupId>org.mule.tools.maven</groupId>
 				<artifactId>mule-maven-plugin</artifactId>
@@ -43,25 +97,32 @@
 						<uri>https://anypoint.mulesoft.com</uri>
 						<provider>MC</provider>
 						<!--Mule Container -->
-						<environment>Sandbox</environment>
-						<target>Cloudhub-US-East-2</target>
-						<muleVersion>4.9.0</muleVersion>
-						<applicationName>order-api-security</applicationName>
-						<replicas>1</replicas>
-						<vCores>0.1</vCores>
+						<environment>${env}</environment>
+						<target>${target}</target>
+						<applicationName>${app.name}</applicationName>
+						<replicas>${replicas}</replicas>
+						<server>anypoint-exchange-v3</server>
+						<vCores>${vCores}</vCores>
 						<deploymentSettings>
 							<generateDefaultPublicUrl>true</generateDefaultPublicUrl>
 						</deploymentSettings>
 						<!-- Connected App Credentials -->
-						<connectedAppClientId>f09c337764e94a6b859bcd54a5b0ceec</connectedAppClientId>
-						<connectedAppClientSecret>f44bCD1818f54Df182934Fc7dca662F9</connectedAppClientSecret>
+						<!-- <connectedAppClientId>f09c337764e94a6b859bcd54a5b0ceec</connectedAppClientId> 
+							<connectedAppClientSecret>f44bCD1818f54Df182934Fc7dca662F9</connectedAppClientSecret> -->
 						<connectedAppGrantType>client_credentials</connectedAppGrantType>
 						<properties>
-							<anypoint.platform.client_id>d475697855da426bbd9cd5b830d8ed61</anypoint.platform.client_id>
-							<anypoint.platform.client_secret>88c3cb95a24f43648a529816B2174a9D</anypoint.platform.client_secret>
+							<anypoint.platform.client_id>${anypoint.client.id}</anypoint.platform.client_id>
+							<anypoint.platform.client_secret>${anypoint.client.secret}</anypoint.platform.client_secret>
+							<anypoint.platform.analytics_base_uri>https://analytics-ingest.anypoint.mulesoft.com</anypoint.platform.analytics_base_uri>
+							<anypoint.platform.base.uri>https://anypoint.mulesoft.com</anypoint.platform.base.uri>
+							<http.port>8081</http.port>
+							<anypoint.platform.api.id>${api.id}</anypoint.platform.api.id>
+							<env>${env}</env>
 						</properties>
+						<secureProperties>
+							<https.port>8082</https.port>
+						</secureProperties>
 					</cloudhub2Deployment>
-
 				</configuration>
 			</plugin>
 		</plugins>
@@ -81,13 +142,6 @@
 			<classifier>mule-plugin</classifier>
 		</dependency>
 		<dependency>
-			<groupId>4c1443f5-bb8b-4313-a009-dc4ac7028224</groupId>
-			<artifactId>order-api-security</artifactId>
-			<version>1.0.1</version>
-			<classifier>raml</classifier>
-			<type>zip</type>
-		</dependency>
-		<dependency>
 			<groupId>org.mule.modules</groupId>
 			<artifactId>mule-apikit-module</artifactId>
 			<version>1.11.3</version>
@@ -98,7 +152,7 @@
 		<repository>
 			<id>anypoint-exchange-v3</id>
 			<name>anypoint-exchange-v3</name>
-			<url>https://maven.anypoint.mulesoft.com/api/v3/organizations/4c1443f5-bb8b-4313-a009-dc4ac7028224/maven</url>
+			<url>https://maven.anypoint.mulesoft.com/api/v3/organizations/8456fb96-a7c8-45ca-ae67-d5873644aba8/maven</url>
 			<layout>default</layout>
 		</repository>
 	</distributionManagement>

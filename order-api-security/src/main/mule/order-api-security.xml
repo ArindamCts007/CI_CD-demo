@@ -6,7 +6,7 @@ http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/m
     </http:listener-config>
     <apikit:config name="order-api-security-config" api="resource::4c1443f5-bb8b-4313-a009-dc4ac7028224:order-api-security:1.0.1:raml:zip:order-api-security.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
     <api-gateway:autodiscovery apiId="${api.id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="6960881e-a2fc-4758-92a6-694c6e013296" flowRef="order-api-security-main" />
-	<configuration-properties doc:name="Configuration properties" doc:id="2ce94032-9c05-4432-a9b4-95a11bc2ea18" file="config-${env}.properties" />
+	<configuration-properties doc:name="Configuration properties" doc:id="362ae9ee-af67-425e-a0f5-c7d4f3ee407a" file="application-${env}.yaml" />
 	<flow name="order-api-security-main">
         <http:listener config-ref="order-api-security-httpListenerConfig" path="/api/*">
             <http:response statusCode="#[vars.httpStatus default 200]">
